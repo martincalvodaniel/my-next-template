@@ -54,3 +54,7 @@ Por petición humana, toda la UI usa inglés: navegación, cuenta, tema, acceso,
 ## Home en navegación en 06
 
 Por petición humana, el registro compartido incluye Home (`/`) y Settings (`/settings`) en ambas variantes responsive. Home utiliza un icono local de casa y solo se activa en la raíz; Settings conserva la foto del perfil social y el respaldo de iniciales.
+
+## Capacidad agéntica en 07
+
+El flujo gestiona las ventanas Codex de 5h y 7d con lecturas directas, estimación de cada entrega completa y reservas finales de 7%/2%, respectivamente. Si una iteración no cabe, se elige una subentrega útil más pequeña y se deja el resto pendiente. La política vigente y el tratamiento de lecturas/reinicios están centralizados en [workflow.md](workflow.md).

@@ -33,13 +33,44 @@ El usuario revisa `int` y, cuando lo considera correcto, hace el merge de `int` 
 
 La autorización se limita al remoto configurado del proyecto actual. Al copiar la plantilla, configurar el remoto de destino antes de publicar. No autoriza producción, provisión, cambios de remoto ni automatizaciones. Si un proyecto configura despliegue de integración al publicar `int`, documentar su política específica; esta plantilla no tiene ese despliegue configurado.
 
-## Presupuesto y continuación
+## Gestión de capacidad de Codex: ventanas de 5h y 7d
 
-Si el usuario solicita varias iteraciones o trabajo desatendido, acordar alcance, condición de parada y reservas antes de ejecutarlo. No copiar umbrales ni lecturas históricas de otro proyecto.
+### Dos ventanas independientes
 
-Cuando se gestione presupuesto y exista una herramienta de uso, consultar las dos ventanas disponibles directamente y calcular el restante como `100 - usedPercent`. No pedir lecturas accesibles al usuario, confundir cuota consumida con disponible ni prometer costes exactos. Reservar margen para pruebas, reparaciones y cierre. Si las lecturas necesarias no están disponibles, cerrar el corte coherente y comunicar la limitación antes de iniciar otro dependiente del presupuesto.
+Este flujo se ejecuta en Codex y debe gestionar las dos ventanas de uso de esta cuenta: **5 horas** (300 minutos) y **7 días** (10 080 minutos). La semanal tiene un horizonte mucho más amplio, pero ambas pueden limitar la siguiente entrega. No son presupuestos separados por chat o agente: otras sesiones pueden consumir la misma capacidad. Si cambia la disponibilidad de límites del plan, verificarlo en la herramienta y comunicar la diferencia; no inventar una ventana ausente.
 
-Este archivo no autoriza créditos, reinicios, automatizaciones ni continuaciones programadas. Cualquier permiso operativo se limita a la solicitud y al proyecto donde se concedió.
+Consultar directamente `get_usage_limits` de la app (actualmente `mcp__codex_app__get_usage_limits`, o su equivalente disponible). Preferir `rateLimitsByLimitId` y seleccionar el límite general de Codex; no confundirlo con una cuota específica de revisión. Identificar cada ventana por `windowDurationMins`, no por su posición o nombre. Calcular **restante = max(0, min(100, 100 - usedPercent))** y conservar la fecha de lectura y `resetsAt` si están disponibles. Un valor ausente no equivale a cero ni a capacidad ilimitada. No registrar identificadores de cuenta, credenciales ni el resultado completo de la herramienta.
+
+Mantener siempre una lectura vigente como referencia de decisión: consultar al empezar o reanudar una sesión, **antes de cada nueva iteración y después de su cierre**, incluidas las documentales. Durante una entrega larga, refrescarla antes de fases costosas (pruebas integradas, reparación amplia, delegación autorizada) y cuando cambie el alcance o el consumo observado. Tras una interrupción o pérdida de contexto, obtener una lectura nueva antes de continuar trabajo relevante. No tratar una observación antigua como medición continua ni hacer consultas sin necesidad en cada llamada de herramienta.
+
+### Reservas obligatorias
+
+| Ventana | Reserva que debe quedar al cerrar | Capacidad utilizable para la siguiente entrega |
+| ------- | --------------------------------- | ---------------------------------------------- |
+| 5h      | **7%**                            | Restante de 5h menos 7 puntos porcentuales     |
+| 7d      | **2%**                            | Restante de 7d menos 2 puntos porcentuales     |
+
+Son márgenes elegidos por el usuario para este proyecto, no límites oficiales de OpenAI. Evaluar ambas ventanas por separado: un punto porcentual de 5h no es intercambiable con uno de 7d. Si alguna está en su reserva o por debajo, no iniciar otra iteración. Reservar primero el coste de cierre; no usar estos márgenes para abrir trabajo adicional.
+
+### Decisión antes de iniciar una iteración
+
+1. Obtener ambas lecturas y definir una entrega útil con objetivo, `target_paths`, dependencias y aceptación verificable.
+2. Estimar por separado el consumo de cada ventana para **análisis, implementación, pruebas, posibles reparaciones, documentación, revisión del diff, commit, push, verificación remota y lectura de cierre**. Usar el extremo conservador de entregas comparables y añadir margen para incertidumbre. Conservar observaciones comparables antes/después cuando existan; no mezclar lecturas a través de un reinicio ni atribuir automáticamente consumo de otros chats a esta entrega.
+3. Comprobar que el coste estimado completo cabe en la capacidad utilizable de **ambas** ventanas. Si el margen es dudoso, la tarea no se considera acotada: dividirla antes de editar, siguiendo dependencias y manteniendo aceptación propia para cada subentrega.
+4. Si no cabe la iteración prevista, buscar una subiteración más pequeña que sí pueda terminarse y publicarse. Aprovechar al máximo la capacidad disponible para trabajo útil y autorizado; no detenerse solo porque la tarea grande no cabe, ni crear trabajo de relleno para consumir cuota.
+5. Dejar explícito qué parte se entrega y cuál queda pendiente. Si ninguna entrega coherente cabe conservando las reservas, detener nuevas iteraciones con un punto de reanudación claro, evitando quedar a mitad por rate limit.
+
+Las estimaciones son heurísticas, no garantías ni conversiones a tokens o número de mensajes. El coste cambia con modelo, contexto, herramientas y complejidad; la [documentación oficial de uso](https://learn.chatgpt.com/docs/pricing#what-are-the-usage-limits-for-my-plan) confirma esta variabilidad. No asumir que una ventana se ha renovado solo por el reloj: volver a consultar después del reset previsto. Por defecto, trabajo secuencial; la capacidad disponible no autoriza por sí sola delegación.
+
+### Seguimiento y cierre
+
+Si aparece consumo o incertidumbre superior a lo previsto, reducir el alcance futuro y priorizar cerrar el corte actual coherentemente. No rebajar aceptación, omitir validaciones necesarias, publicar código roto ni declarar una iteración terminada para aparentar cumplimiento de la reserva. Si una reserva se cruza de forma imprevista, comunicarlo y evitar abrir más trabajo; conservar el estado y las comprobaciones pendientes.
+
+Después del commit/push y la verificación de `origin/int`, consultar de nuevo ambas ventanas y comunicar el restante junto con la entrega y su siguiente paso. Registrar la lectura inicial y la decisión de alcance en la entrada de iteración cuando aporte evidencia; la lectura posterior al commit puede comunicarse al usuario e incorporarse a la siguiente entrada, sin crear un commit extra solo para guardar una cifra ni un ciclo de commits/consultas.
+
+No pedir al usuario datos que la herramienta puede obtener. Si falta una lectura necesaria, reintentar una vez ante fallo transitorio; si sigue sin estar disponible, no inventar datos ni abrir otra entrega dependiente de ellos. Preservar/cerrar el trabajo en curso hasta donde sea comprobable, comunicar la limitación y solicitar únicamente la lectura que no se puede obtener.
+
+La política se aplica tanto al trabajo interactivo como a lotes expresamente autorizados. No amplía el alcance de la petición ni autoriza trabajo desatendido, créditos, reinicios de cuota, automatizaciones o continuaciones programadas. Si el usuario solicita un lote, acordar su alcance y condición de parada; las reservas 7%/2% siguen vigentes salvo cambio humano explícito.
 
 ## Interrupciones
 

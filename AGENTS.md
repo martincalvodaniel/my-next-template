@@ -26,6 +26,14 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 Default to sequential work. Spawn subagents only when the user or applicable instructions explicitly authorize delegation. Assign disjoint `target_paths`, name an integration owner, and remind workers that they are not alone and must preserve others' edits. Shared schemas, lockfiles, package scripts, index registration, and planning integration have one owner. Agent completion does not replace integrated validation.
 
+## Codex Capacity Management
+
+- This workflow runs in Codex with two account usage windows: 5 hours and 7 days. The weekly horizon is much longer; evaluate each independently, not as interchangeable percentages or per-agent allowances.
+- Follow the capacity policy in `plan/workflow.md`. Query the app's usage tool directly at session start/resumption, before every iteration, after commit/push and remote verification, and at costly or uncertain milestones. Identify windows by duration and calculate remaining capacity as `100 - usedPercent`; missing readings are not unlimited capacity.
+- Preserve at least **7% remaining in the 5h window and 2% in the 7d window** after delivery. Estimate the whole iteration, including validation, repairs, documentation, publication, and closure, against both reserves before editing.
+- Use capacity efficiently within the authorized task. If the intended iteration will not fit, deliver a smaller, independently valid part and leave the rest explicitly pending. Start no new iteration at/below either reserve, or when no useful delivery can fit conservatively. Never skip required checks or publish broken work to fit a budget.
+- Refresh stale readings; report both remaining percentages at closure. Do not ask the user for readings available through tools, invent exact cost guarantees, or use credits/resets/scheduled work without authorization.
+
 ## Authoritative Stack
 
 - Next.js 16 App Router, React 19, React DOM 19, and TypeScript.

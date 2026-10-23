@@ -129,3 +129,5 @@ El trabajo es secuencial por defecto. El paralelismo requiere autorización y ar
 ### Compatibilidad del registro de acceso
 
 `user_access` mantiene un único documento por correo normalizado. Los permisos anteriores sin `status` se consideran aprobados. Los nuevos estados son `pending`, `rejected` y `approved`; únicamente `approved` concede acceso normal. Las solicitudes añaden `requestId` (UUID), `requestedAt` y, al resolverse, `resolvedAt`. La aceptación cambia el estado en una única escritura condicional: no necesita transacciones multirregistro ni una réplica MongoDB. Revocar elimina el permiso y una posterior solicitud obtiene otra identidad, por lo que las decisiones antiguas no se reaplican.
+
+La [política de capacidad de Codex](plan/workflow.md#gestión-de-capacidad-de-codex-ventanas-de-5h-y-7d) exige consultar las ventanas de 5h y 7d antes de cada iteración y tras su cierre, estimar implementación y validación/publicación, y conservar 7%/2%. Si el alcance no cabe, el agente entrega una parte menor coherente y deja el resto pendiente, aprovechando la capacidad autorizada sin abrir trabajo que no pueda cerrar.

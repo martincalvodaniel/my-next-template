@@ -89,3 +89,13 @@ Las siguientes iteraciones se definen a partir del producto real. No hay una hoj
 - Aceptación: Home enlaza `/`, Settings conserva su foto y ruta; estado activo exclusivo, sin overflow ni nuevas dependencias.
 - Validación: lint, tipos, suite, build y navegación real móvil/escritorio.
 - Cierre: commit/push en `int` con verificación remota.
+
+## 07 — Capacidad de Codex por ventanas
+
+- Estado: `validated`.
+- Objetivo: formalizar la gestión continua de las dos ventanas, estimación conservadora y reservas de 7% en 5h / 2% en 7d.
+- `target_paths`: `AGENTS.md`, `README.md`, `plan/{AGENTS,master,workflow,iterations,iteration-log}.md`.
+- Dependencias: instrucción humana de reservas y herramienta de uso disponible.
+- Aceptación: consultas al inicio/antes/durante fases relevantes/después; coste de entrega y cierre completo; reducción a una subiteración útil cuando la prevista no cabe; sin mezclar porcentajes ni inventar lecturas; reglas coherentes en documentación raíz y anidada.
+- Validación: consistencia, enlaces locales, formato Markdown y `git diff --check`; entrega exclusivamente documental.
+- Cierre: commit/push en `int`, SHA remoto y lectura final de ambas ventanas.

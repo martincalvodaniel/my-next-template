@@ -110,3 +110,13 @@
 - Navegador compilado con sesión admin ficticia: Settings→Home a 390px, solo Home activo y sin overflow; Home→Settings a 1280px, solo Settings activo y barra superior sticky. Captura: `/private/tmp/template-home-navigation-mobile.png` fuera de Git.
 - Viewport restaurado, pestaña propia cerrada y servidor temporal retirado; sin acceso a Mongo ni login Google real.
 - Publicación: commit/push en `int` y verificación remota al cierre; `main` intacta.
+
+## 07 — Gestión de capacidad Codex · 2026-10-23
+
+- Estado: `validated`; cambio documental.
+- Política humana: ventanas 5h/7d, seguimiento directo, estimar la entrega completa, dividir antes de empezar si no cabe y aprovechar trabajo útil autorizado dejando reservas 7%/2%.
+- Entrada observada mediante herramienta: 36% restante de 5h y 72% de 7d (duraciones 300/10 080 minutos); esta lectura es evidencia de la sesión, no capacidad fija para futuras iteraciones. La entrega documental cabe holgadamente sobre las reservas sin prometer un coste exacto.
+- Cambios: sección específica en workflow y reglas raíz/anidadas. Consultas antes de iterar, en hitos costosos/inciertos y tras publicar; cálculo de restantes, identificación por duración, costes de validación/reparación/publicación, decisiones ante falta de capacidad o lecturas y ausencia de autorizaciones implícitas de créditos/reinicios/automatizaciones.
+- Distinción: reservas del usuario frente a límites de producto; horizonte semanal más amplio sin equiparar puntos de ambas ventanas. Documentación oficial consultada para variabilidad y límites compartidos, con enlace en workflow.
+- Validación: coherencia de reservas y enlaces locales, formato Markdown y `git diff --check` aprobados. Sin cambios de aplicación que requieran repetir su suite/build.
+- Cierre: commit/push en `int`, verificación de SHA remoto y lectura posterior comunicados al usuario; sin commit adicional solo para registrar esa lectura. `main` intacta.
