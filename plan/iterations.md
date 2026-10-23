@@ -99,3 +99,14 @@ Las siguientes iteraciones se definen a partir del producto real. No hay una hoj
 - Aceptación: consultas al inicio/antes/durante fases relevantes/después; coste de entrega y cierre completo; reducción a una subiteración útil cuando la prevista no cabe; sin mezclar porcentajes ni inventar lecturas; reglas coherentes en documentación raíz y anidada.
 - Validación: consistencia, enlaces locales, formato Markdown y `git diff --check`; entrega exclusivamente documental.
 - Cierre: commit/push en `int`, SHA remoto y lectura final de ambas ventanas.
+
+## 08 — Configuración Vercel
+
+- Estado: `validated`.
+- Objetivo: añadir exactamente la configuración solicitada en `vercel.ts`, con región `cdg1` y denegación cuando no coincida el país `ES`.
+- `target_paths`: `vercel.ts`, `package.json`, `bun.lock`, `README.md`, `plan/{master,iterations,iteration-log}.md`.
+- Dependencias: instalación de `@vercel/config` autorizada expresamente por el usuario; formato raíz/export verificado en documentación oficial.
+- Aceptación: configuración tipada sin alterar la regla solicitada, versión exacta y lockfile Bun coherentes; documentación distingue configuración y despliegue efectivo.
+- Validación: lint, tipos, suite existente, build, enlaces locales y `git diff --check`. Sin cambios de UI ni despliegue solicitado.
+- Capacidad: lectura vigente 17%/69% restante (5h/7d); entrega acotada estimada en menos de 6/2 puntos, incluido cierre, conservando reservas 7%/2%.
+- Cierre: commit/push en `int`, verificación de SHA remoto y lectura final de ventanas.

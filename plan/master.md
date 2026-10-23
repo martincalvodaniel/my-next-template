@@ -4,7 +4,7 @@
 
 Plantilla técnica sin dominio de negocio definido. Incluye Google OAuth con cookies de sesión, administradores en `ALLOWED_EMAILS`, usuarios normales autorizados en MongoDB y administración protegida en `/admin`. La colección `user_access` conserva permisos y solicitudes de acceso, con índice único por correo normalizado e índice de estado/correo para el listado paginado de pendientes. El inventario y la configuración se describen en [README.md](../README.md).
 
-La autenticación no utiliza un adaptador persistente MongoDB. No existen funcionalidades offline, sincronización, PDF ni despliegue preconfigurado. Estos elementos requieren alcance y decisiones propios si el producto los necesita.
+La autenticación no utiliza un adaptador persistente MongoDB. No existen funcionalidades offline, sincronización, PDF ni despliegue activo configurado. Existe `vercel.ts` con región `cdg1` y restricción de país `ES` solicitadas por el usuario; su aplicación efectiva requiere un despliegue Vercel. Estos elementos requieren alcance y decisiones propios si el producto los necesita.
 
 ## Definición del próximo producto
 

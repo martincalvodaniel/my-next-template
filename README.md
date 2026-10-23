@@ -9,9 +9,15 @@ Base reutilizable para webapps con Next.js 16, React 19 y TypeScript. Incluye ac
 - Autorización en el layout protegido mediante `requireAuthorizedSession()`. El proxy comprueba la presencia de una cookie como optimización de redirección; no sustituye la autorización de cada operación.
 - Driver nativo MongoDB, conexión compartida, registro central de colecciones e índices. La colección `user_access` registra los usuarios normales autorizados y tiene un índice único por correo normalizado.
 - Tailwind CSS 4, Biome, pruebas con Bun y comprobación de TypeScript. SWR y Zod están instalados para las funcionalidades que los requieran.
-- Pantallas iniciales de acceso e inicio. No incluye dominio de negocio, modo offline, sincronización, generación de PDF ni despliegue configurado.
+- Pantallas iniciales de acceso e inicio. No incluye dominio de negocio, modo offline, sincronización, generación de PDF ni despliegue activo configurado.
 
 Las versiones exactas están en `package.json` y `bun.lock`. Bun es el gestor de paquetes de este repositorio; mantener un único lockfile evita instalaciones divergentes.
+
+## Configuración de Vercel
+
+[vercel.ts](vercel.ts) contiene la configuración solicitada: región `cdg1` y una regla para todas las rutas que deniega las peticiones cuando `x-vercel-ip-country` no coincide con `ES`, incluida su ausencia. Usa `@vercel/config` con versión exacta en el lockfile Bun. El formato se describe en la [documentación oficial](https://vercel.com/docs/project-configuration/vercel-ts).
+
+La regla corresponde al despliegue en Vercel; no se aplica al servidor local de Next. Añadir este archivo no crea un proyecto, conecta el repositorio ni ejecuta un despliegue. La comprobación efectiva del filtro geográfico queda para un despliegue autorizado en Vercel.
 
 ## Arranque local
 

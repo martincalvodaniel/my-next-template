@@ -120,3 +120,12 @@
 - Distinción: reservas del usuario frente a límites de producto; horizonte semanal más amplio sin equiparar puntos de ambas ventanas. Documentación oficial consultada para variabilidad y límites compartidos, con enlace en workflow.
 - Validación: coherencia de reservas y enlaces locales, formato Markdown y `git diff --check` aprobados. Sin cambios de aplicación que requieran repetir su suite/build.
 - Cierre: commit/push en `int`, verificación de SHA remoto y lectura posterior comunicados al usuario; sin commit adicional solo para registrar esa lectura. `main` intacta.
+
+## 08 — Configuración Vercel · 2026-10-23
+
+- Estado: `validated`. Añadido `vercel.ts` en raíz con el contenido exacto solicitado: región `cdg1`, todas las rutas, condición `missing` sobre país `ES` y mitigación `deny`.
+- Instalación autorizada: `@vercel/config@0.13.0` con versión exacta en `package.json` y `bun.lock`. `bun install --frozen-lockfile` aprobado sin cambios. El primer intento de instalación quedó bloqueado por la caché del sandbox; completado con acceso autorizado.
+- Lint aprobado (cinco diagnósticos informativos preexistentes en pruebas ajenas), tipos aprobados incluyendo `vercel.ts`, 37 pruebas/93 aserciones aprobadas y `bun run build --webpack` aprobado. Se mantiene la alternativa Webpack documentada para las restricciones del entorno con Turbopack; no se cambia el script de build.
+- README y plan distinguen configuración de despliegue efectivo. Formato raíz/export contrastado con documentación oficial de Vercel; enlaces locales y `git diff --check` aprobados. Sin cambios de UI, acceso a Mongo ni despliegue; el filtro en infraestructura Vercel queda pendiente de comprobación cuando se autorice un despliegue.
+- Capacidad al retomar: 17%/69% restante (5h/7d); alcance pequeño y cierre incluidos en la estimación, con reservas 7%/2%.
+- Cierre: commit/push en `int` y verificación remota; lectura posterior comunicada al usuario. `main` intacta.
